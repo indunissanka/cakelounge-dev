@@ -1,13 +1,12 @@
 import React, { useMemo } from 'react';
-    import type { TierConfig, CakeTopper, IcingDecoration } from '../types/cake';
+    import type { TierConfig, CakeTopper } from '../types/cake';
 
     interface CakePreviewProps {
       tiers: TierConfig[];
       topper?: CakeTopper | null;
-      icingDecoration?: IcingDecoration | null;
     }
 
-    export function CakePreview({ tiers, topper, icingDecoration }: CakePreviewProps) {
+    export function CakePreview({ tiers, topper }: CakePreviewProps) {
       const calculateTopTierHeight = () => {
         if (tiers.length === 0) return 0;
         let totalHeight = 0;
@@ -70,65 +69,9 @@ import React, { useMemo } from 'react';
         }
       };
 
-      const renderIcingDecoration = () => {
-        if (!icingDecoration) return null;
-
-        switch (icingDecoration) {
-          case 'drip':
-            return (
-              <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-[80%] h-10 bg-pink-300 rounded-b-full overflow-hidden">
-                  <div className="absolute top-0 left-0 w-full h-full bg-white opacity-50 animate-drip"></div>
-                </div>
-              </div>
-            );
-          case 'swirls':
-            return (
-              <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
-                  <div className="w-[80%] h-[80%] border-4 border-pink-300 rounded-full animate-swirl"></div>
-                </div>
-              </div>
-            );
-          case 'sprinkles':
-            return (
-              <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
-                  <div className="w-[80%] h-[80%] flex flex-wrap justify-center items-center">
-                    {Array.from({ length: 20 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className="w-1 h-1 rounded-full bg-yellow-300 m-0.5 animate-sprinkle"
-                        style={{
-                          animationDelay: `${Math.random() * 0.5}s`,
-                          transform: `translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px)`,
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            );
-          default:
-            return null;
-        }
-      };
-
       return (
-        <div className="flex flex-col items-center justify-end h-[400px] rounded-lg p-4 relative" style={{
-          backgroundImage: `url('https://cakeloungephots.pages.dev/back.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}>
-          {topper && (
-            <div
-              className="absolute left-1/2 transform -translate-x-1/2 text-center"
-              style={{ top: `calc(100% - ${topTierHeight + 10}px)` }}
-            >
-              {renderTopper()}
-            </div>
-          )}
-          {renderIcingDecoration()}
+        <div className="flex flex-col items-center justify-end h-[400px] rounded-lg p-4 relative">
+          
           {[...tiers].reverse().map((tier, index) => {
             const reversedIndex = tiers.length - 1 - index;
             const width = 200 - (reversedIndex * 25);
@@ -136,6 +79,9 @@ import React, { useMemo } from 'react';
             const colors = tier.colors.slice(0, layerCount);
             const layersPerColor = Math.floor(6 / colors.length);
             const remainder = 6 % colors.length;
+            const isTopTier = reversedIndex === 0;
+            const topperOffset = isTopTier ? `calc(-65px + ${tiers.length > 0 ? -50 * (tiers.length - 1) : 0}px)` : 0;
+
 
             return (
               <div
@@ -173,6 +119,14 @@ import React, { useMemo } from 'react';
                     />
                   );
                 })}
+              {isTopTier && topper && (
+                  <div
+                    className="absolute left-1/2 transform -translate-x-1/2 text-center"
+                    style={{ top: `${topperOffset}` }}
+                  >
+                    {renderTopper()}
+                  </div>
+                )}
               </div>
             );
           })}

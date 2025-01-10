@@ -1,5 +1,5 @@
 import React from 'react';
-    import type { CakeFlavor, Frosting, CakeShape, CakeTopper, IcingDecoration } from '../types/cake';
+    import type { CakeFlavor, Frosting, CakeShape, CakeTopper } from '../types/cake';
 
     interface CakeOptionsProps {
       flavor: CakeFlavor;
@@ -7,13 +7,11 @@ import React from 'react';
       message: string;
       shape: CakeShape;
       topper: CakeTopper | null;
-      icingDecoration: IcingDecoration | null;
       onFlavorChange: (flavor: CakeFlavor) => void;
       onFrostingChange: (frosting: Frosting) => void;
       onMessageChange: (message: string) => void;
       onShapeChange: (shape: CakeShape) => void;
       onTopperChange: (topper: CakeTopper | null) => void;
-      onIcingDecorationChange: (icingDecoration: IcingDecoration | null) => void;
     }
 
     export function CakeOptions({
@@ -22,13 +20,11 @@ import React from 'react';
       message,
       shape,
       topper,
-      icingDecoration,
       onFlavorChange,
       onFrostingChange,
       onMessageChange,
       onShapeChange,
       onTopperChange,
-      onIcingDecorationChange,
     }: CakeOptionsProps) {
       return (
         <div className="bg-white rounded-lg shadow-lg p-6 space-y-4">
@@ -114,21 +110,6 @@ import React from 'react';
               <option value="custom">Custom</option>
               <option value="happyBirthday">Happy Birthday</option>
               <option value="happyAnniversary">Happy Anniversary</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Icing Decoration
-            </label>
-            <select
-              value={icingDecoration || ''}
-              onChange={(e) => onIcingDecorationChange(e.target.value as IcingDecoration)}
-              className="w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500"
-            >
-              <option value="">None</option>
-              <option value="drip">Drip</option>
-              <option value="swirls">Swirls</option>
-              <option value="sprinkles">Sprinkles</option>
             </select>
           </div>
           <div>

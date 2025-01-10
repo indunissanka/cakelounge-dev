@@ -80,7 +80,6 @@ import type { CakeDesign } from '../types/cake';
           <p><strong>Frosting Type:</strong> ${design.frosting}</p>
           <p><strong>Message:</strong> ${design.message || 'No message'}</p>
           <p><strong>Topper:</strong> ${renderTopper()}</p>
-          <p><strong>Icing Decoration:</strong> ${design.icingDecoration || 'None'}</p>
         </div>
       `;
     };
