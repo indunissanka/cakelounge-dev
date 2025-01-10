@@ -116,7 +116,7 @@ import React, { useMemo } from 'react';
 
       return (
         <div className="flex flex-col items-center justify-end h-[400px] rounded-lg p-4 relative" style={{
-          backgroundImage: `url('https://cakelounge.lk/image/back.png')`,
+          backgroundImage: `url('https://cakeloungephots.pages.dev/back.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
